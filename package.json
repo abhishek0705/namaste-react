@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "This is Learn React",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "parcel index.html",
+    "ssl-start": "parcel index.html --https",
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",

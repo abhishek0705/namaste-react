@@ -1,22 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const parent = React.createElement(
-  "div", //tag
-  { id: "parent" }, // attribute
-  [
-    // childred
-    React.createElement("div", { id: "child", key: "child" }, [
-      React.createElement("h1", { key: "h1" }, "I am h1 tag!"),
-      React.createElement("h2", { key: "h2" }, "I am h2 tag!"),
-    ]),
+// const heading = React.createElement(
+//   "h1", // tag name
+//   { key: "h3" }, // attributes
+//   "I am h1 tag!" // children
+// );
 
-    React.createElement("div", { id: "child2", key: "child2" }, [
-      React.createElement("h1", { key: "h3" }, "I am h1 tag!"),
-      React.createElement("h2", { key: "h4" }, "I am h2 tag!"),
-    ]),
-  ]
-);
+// jsx (transpiled before it reaches the JS Engline using Babel) 
+const jsxHeading = <h1 id='heading'>Learn React using JSX</h1>;
+
+const HeadingComponent = () => (
+    <div id='container'>
+        <h1>Functional Heading Component</h1>
+    </div>
+)
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(parent);
+// root.render(jsxHeading);
+root.render(<HeadingComponent />);
