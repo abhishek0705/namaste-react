@@ -1,33 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
-import { IMG_CDN_URL, restaurantList } from "../utils/constants";
+import { FETCH_RESTAURENT_URL, IMG_CDN_URL } from "../utils/constants";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
-  const [listOfRestaurants, setRestaurantList] = useState(restaurantList);
-  const onClickBtn = () => {
-    const topRated = listOfRestaurants.filter(
-      (item) => item.data.avgRating > 3
-    );
-    setRestaurantList(topRated);
+  const [searchText, setSearchText] = useState("");
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const listOfRestaurantsRef = useRef([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch(FETCH_RESTAURENT_URL);
+    const json = await data.json();
+    const restaurantList =
+      json?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+    const filteredData = restaurantList?.map((item) => item.info);
+    listOfRestaurantsRef.current = filteredData;
+    setFilteredRestaurants(filteredData);
   };
-  return (
+
+  const onClickFilterTop = () => {
+    const topRated = listOfRestaurantsRef.current.filter(
+      (item) => item.avgRating > 4.4
+    );
+    setFilteredRestaurants(topRated);
+  };
+
+  const onClickSearch = () => {
+    if (searchText) {
+      const filteredSearch = listOfRestaurantsRef.current.filter((item) =>
+        item.name.toLowerCase().trim().includes(searchText.toLowerCase().trim())
+      );
+
+      if (filteredSearch.length > 0) setFilteredRestaurants(filteredSearch);
+    } else {
+      setFilteredRestaurants(listOfRestaurantsRef.current);
+    }
+    return true;
+  };
+
+  return filteredRestaurants.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body">
       <div className="filter">
-        <button className="filter-btn" onClick={onClickBtn}>
+        <input
+          placeholder="Search Reastaurants..."
+          className="search-box"
+          type="text"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <button onClick={onClickSearch}>Search</button>
+        <button className="filter-btn" onClick={onClickFilterTop}>
           Top Rated Restaurants
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map((item) => (
+        {filteredRestaurants.map((item) => (
           <RestaurantCard
-            key={item.data.id}
-            uniqueId={item.data.id}
-            resName={item.data.name}
-            cuisine={item.data.cuisines.join(", ")}
-            rating={item.data.avgRating}
-            deliveryTime={item.data.slaString}
-            costForTwo={item.data.costForTwoString}
-            imageUri={IMG_CDN_URL + item.data.cloudinaryImageId}
+            key={item.id}
+            uniqueId={item.id}
+            resName={item.name}
+            cuisine={item.cuisines.join(", ")}
+            rating={item.avgRating}
+            deliveryTime={item.sla.slaString}
+            costForTwo={item.costForTwo}
+            imageUri={IMG_CDN_URL + item.cloudinaryImageId}
           />
         ))}
       </div>
