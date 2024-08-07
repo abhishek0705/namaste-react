@@ -11,10 +11,13 @@ const RestaurantCard = ({
   uniqueId,
 }) => {
   return (
-    <div className="res-card" key={uniqueId}>
+    <div
+      className="m-4 p-4 w-[250px] rounded-lg bg-gray-100 hover:bg-gray-200 cursor-pointer"
+      key={uniqueId}
+    >
       <Link to={"/restaurant/" + uniqueId}>
-        <img className="res-logo" alt="res-logo" src={imageUri} />
-        <h3>{resName}</h3>
+        <img className="rounded-lg" alt="res-logo" src={imageUri} />
+        <h3 className="font-bold py-4 text-lg">{resName}</h3>
         <h4>{cuisine}</h4>
         <h4>{rating}</h4>
         <h4>{costForTwo}</h4>
