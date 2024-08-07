@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../assets/appIcon.png";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const onlineStatus = useOnline();
+  const { loggedInUser, isLoggedIn: contextIsLoggedIn } =
+    useContext(UserContext);
 
   const onClickHandler = () => {
     setLoggedIn(!isLoggedIn);
@@ -41,6 +44,8 @@ const Header = () => {
           <button className="login" onClick={onClickHandler}>
             {isLoggedIn ? "Logout" : "Login"}
           </button>
+
+          <li className="px-4 font-bold">{loggedInUser}</li>
         </ul>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withOpenLable } from "./RestaurantCard";
 import { FETCH_RESTAURENT_URL, IMG_CDN_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 
@@ -7,6 +7,8 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const listOfRestaurantsRef = useRef([]);
+
+  const RestaurantCardOpenedLabel = withOpenLable(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -73,18 +75,31 @@ const Body = () => {
         </div>
       </div>
       <div className="flex flex-wrap">
-        {filteredRestaurants.map((item) => (
-          <RestaurantCard
-            key={item.id}
-            uniqueId={item.id}
-            resName={item.name}
-            cuisine={item.cuisines.join(", ")}
-            rating={item.avgRating}
-            deliveryTime={item.sla.slaString}
-            costForTwo={item.costForTwo}
-            imageUri={IMG_CDN_URL + item.cloudinaryImageId}
-          />
-        ))}
+        {filteredRestaurants.map((item) =>
+          item.isOpen ? (
+            <RestaurantCardOpenedLabel
+              key={item.id}
+              uniqueId={item.id}
+              resName={item.name}
+              cuisine={item.cuisines.join(", ")}
+              rating={item.avgRating}
+              deliveryTime={item.sla.slaString}
+              costForTwo={item.costForTwo}
+              imageUri={IMG_CDN_URL + item.cloudinaryImageId}
+            />
+          ) : (
+            <RestaurantCard
+              key={item.id}
+              uniqueId={item.id}
+              resName={item.name}
+              cuisine={item.cuisines.join(", ")}
+              rating={item.avgRating}
+              deliveryTime={item.sla.slaString}
+              costForTwo={item.costForTwo}
+              imageUri={IMG_CDN_URL + item.cloudinaryImageId}
+            />
+          )
+        )}
       </div>
     </div>
   );
