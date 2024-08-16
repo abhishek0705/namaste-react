@@ -18,7 +18,7 @@ const Body = () => {
     const data = await fetch(FETCH_RESTAURENT_URL);
     const json = await data.json();
     const restaurantList =
-      json?.data?.cards?.[1]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards?.[3]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
     const filteredData = restaurantList?.map((item) => item.info);
     listOfRestaurantsRef.current = filteredData;
@@ -53,6 +53,7 @@ const Body = () => {
         <div className="m-4 p-4 items-center">
           <input
             placeholder="Search Reastaurants..."
+            data-testid="searchInput"
             className="border border-solid border-black focus:ring-1 p-2 rounded-md w-96"
             type="text"
             value={searchText}

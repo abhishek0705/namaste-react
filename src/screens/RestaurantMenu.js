@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { FETCH_MENU_URL, IMG_CDN_URL } from "../utils/constants";
 import Shimmer from "../components/Shimmer";
 import { useParams } from "react-router-dom";
@@ -7,8 +7,10 @@ import RestaurentCategory from "../components/RestaurentCategory";
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
   const [resCategoryMenu, setResCategoryMenu] = useState([]);
-  const [showIndex, setShowIndex] = useState(0);
+  const uniqueId = useId();
+  const [showIndex, setShowIndex] = useState(-1);
   const { resId } = useParams();
+
   useEffect(() => {
     fetchMenu();
   }, []);
@@ -42,7 +44,7 @@ const RestaurantMenu = () => {
   return resInfo === null ? (
     <Shimmer />
   ) : (
-    <div className="px-16 py-8 text-center">
+    <div key={uniqueId} className="px-16 py-8 text-center">
       <h1 className="font-bold my-2 text-2xl">{name}</h1>
       <h4>{areaName}</h4>
       <h2 className="font-bold my-2 text-lg">

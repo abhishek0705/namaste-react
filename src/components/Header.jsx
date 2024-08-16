@@ -3,10 +3,13 @@ import logo from "../assets/appIcon.png";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
 import UserContext from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const onlineStatus = useOnline();
+  const cartItems = useSelector(({ cart }) => cart.items);
+
   const { loggedInUser, isLoggedIn: contextIsLoggedIn } =
     useContext(UserContext);
 
@@ -38,8 +41,8 @@ const Header = () => {
               Contact Us
             </Link>
           </li>
-          <li className="px-4">
-            <Link to="/cart">Cart</Link>
+          <li className="px-4 font-bold text-xl">
+            <Link to="/cart">Cart ({cartItems.length} Items)</Link>
           </li>
           <button className="login" onClick={onClickHandler}>
             {isLoggedIn ? "Logout" : "Login"}

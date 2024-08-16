@@ -36,3 +36,19 @@
  *  - Links
  *  - Contact Info
  */
+
+ # Types of testing
+    - Unit Testing
+    - Integration Testing
+    - End to End testing (e2e tesing)
+
+# Setting up Testing
+    - Install React Testing Library, Jest, Babel Dependencies
+    - Configure Babel
+    - Configure Babel Config file to disable default babel transpilation
+    - Jest - npx jest --init
+    - Install jsdom library (jest-environment-jsdom)
+    - Install @babel/preset-react to make JSX work in test cases
+    - Include @babel/preset-react inside babel config
+    - Install @testing-library/jest-dom
+     
