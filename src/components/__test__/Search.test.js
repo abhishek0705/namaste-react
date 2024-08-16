@@ -33,26 +33,26 @@ describe("Body Test Cases", () => {
     expect(cardsBeforeSearch.length).toBe(8);
   });
 
-  // test("Should filter top rated restaurant", async () => {
-  //   await act(async () =>
-  //     render(
-  //       <BrowserRouter>
-  //         <Provider store={store}>
-  //           <Body />
-  //         </Provider>
-  //       </BrowserRouter>
-  //     )
-  //   );
+  test("Should filter top rated restaurant", async () => {
+    await act(async () =>
+      render(
+        <BrowserRouter>
+          <Provider store={store}>
+            <Body />
+          </Provider>
+        </BrowserRouter>
+      )
+    );
 
-  // const cardsBeforeFilter = screen.getAllByTestId("resCard");
-  // const searchBtn = screen.getByRole("button", {
-  //   name: "Top Rated Restaurants",
-  // });
+    const cardsBeforeFilter = screen.getAllByTestId("resCard");
+    const searchBtn = screen.getByRole("button", {
+      name: "Top Rated Restaurants",
+    });
 
-  // fireEvent.click(searchBtn);
+    fireEvent.click(searchBtn);
 
-  // const cards = screen.getAllByTestId("resCard");
-  // expect(cards.length).toBe(1);
-  // expect(cardsBeforeFilter.length).toBe(8);
-  //   });
+    const cards = screen.getAllByTestId("resCard");
+    expect(cards.length).toBe(1);
+    expect(cardsBeforeFilter.length).toBe(8);
+  });
 });
